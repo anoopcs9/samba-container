@@ -52,15 +52,17 @@ jobs:
           # there are no nightly packages for opensuse
           - package_source: nightly
             os: opensuse
-          - os: centos
-            arch: arm64
         include:
           - package_source: devbuilds
             os: centos
-            arch: {name: amd64, host: ubuntu-24.04}
+            arch:
+              - {name: amd64, host: ubuntu-24.04}
+              - {name: arm64, host: ubuntu-24.04-arm}
           - package_source: ceph20
             os: centos
-            arch: {name: amd64, host: ubuntu-24.04}
+            arch:
+              - {name: amd64, host: ubuntu-24.04}
+              - {name: arm64, host: ubuntu-24.04-arm}
     runs-on: ${{ matrix.arch.host }}
     env:
       BUILDAH_FORMAT: oci
@@ -125,9 +127,6 @@ jobs:
         arch:
           - {name: amd64, host: ubuntu-24.04}
           - {name: arm64, host: ubuntu-24.04-arm}
-        exclude:
-          - os: centos
-            arch: {name: arm64, host: ubuntu-24.04-arm}
     runs-on: ${{ matrix.arch.host }}
     env:
       BUILDAH_FORMAT: oci
@@ -315,11 +314,13 @@ jobs:
           --repo-base=${REPO_BASE}
           --no-distro-qualified
           -i samba-server:ceph20-centos-amd64
+          -i samba-server:ceph20-centos-arm64
           -i samba-server:default-centos-amd64
           -i samba-server:default-centos-arm64
           -i samba-server:default-fedora-amd64
           -i samba-server:default-fedora-arm64
           -i samba-server:devbuilds-centos-amd64
+          -i samba-server:devbuilds-centos-arm64
           -i samba-server:nightly-centos-amd64
           -i samba-server:nightly-centos-arm64
           -i samba-server:nightly-fedora-amd64
@@ -330,6 +331,7 @@ jobs:
           -i samba-ad-server:nightly-fedora-amd64
           -i samba-ad-server:nightly-fedora-arm64
           -i samba-client:default-centos-amd64
+          -i samba-client:default-centos-arm64
           -i samba-client:default-fedora-amd64
           -i samba-client:default-fedora-arm64
           -i samba-toolbox:default-fedora-amd64
@@ -339,11 +341,13 @@ jobs:
           --index
           --container-engine=${CONTAINER_CMD}
           -i ${REPO_BASE}/samba-server:ceph20-centos-amd64
+          -i ${REPO_BASE}/samba-server:ceph20-centos-arm64
           -i ${REPO_BASE}/samba-server:default-centos-amd64
           -i ${REPO_BASE}/samba-server:default-centos-arm64
           -i ${REPO_BASE}/samba-server:default-fedora-amd64
           -i ${REPO_BASE}/samba-server:default-fedora-arm64
           -i ${REPO_BASE}/samba-server:devbuilds-centos-amd64
+          -i ${REPO_BASE}/samba-server:devbuilds-centos-arm64
           -i ${REPO_BASE}/samba-server:nightly-centos-amd64
           -i ${REPO_BASE}/samba-server:nightly-centos-arm64
           -i ${REPO_BASE}/samba-server:nightly-fedora-amd64
@@ -354,6 +358,7 @@ jobs:
           -i ${REPO_BASE}/samba-ad-server:nightly-fedora-amd64
           -i ${REPO_BASE}/samba-ad-server:nightly-fedora-arm64
           -i ${REPO_BASE}/samba-client:default-centos-amd64
+          -i ${REPO_BASE}/samba-client:default-centos-arm64
           -i ${REPO_BASE}/samba-client:default-fedora-amd64
           -i ${REPO_BASE}/samba-client:default-fedora-arm64
           -i ${REPO_BASE}/samba-toolbox:default-fedora-amd64
@@ -371,11 +376,13 @@ jobs:
           --push-kinds=mixed,index-multiarch
           --push-format=oci
           -i ${REPO_BASE}/samba-server:ceph20-centos-amd64
+          -i ${REPO_BASE}/samba-server:ceph20-centos-arm64
           -i ${REPO_BASE}/samba-server:default-centos-amd64
           -i ${REPO_BASE}/samba-server:default-centos-arm64
           -i ${REPO_BASE}/samba-server:default-fedora-amd64
           -i ${REPO_BASE}/samba-server:default-fedora-arm64
           -i ${REPO_BASE}/samba-server:devbuilds-centos-amd64
+          -i ${REPO_BASE}/samba-server:devbuilds-centos-arm64
           -i ${REPO_BASE}/samba-server:nightly-centos-amd64
           -i ${REPO_BASE}/samba-server:nightly-centos-arm64
           -i ${REPO_BASE}/samba-server:nightly-fedora-amd64
@@ -386,6 +393,7 @@ jobs:
           -i ${REPO_BASE}/samba-ad-server:nightly-fedora-amd64
           -i ${REPO_BASE}/samba-ad-server:nightly-fedora-arm64
           -i ${REPO_BASE}/samba-client:default-centos-amd64
+          -i ${REPO_BASE}/samba-client:default-centos-arm64
           -i ${REPO_BASE}/samba-client:default-fedora-amd64
           -i ${REPO_BASE}/samba-client:default-fedora-arm64
           -i ${REPO_BASE}/samba-toolbox:default-fedora-amd64
